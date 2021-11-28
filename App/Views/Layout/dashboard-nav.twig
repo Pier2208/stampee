@@ -1,0 +1,45 @@
+{% import "icons.twig" as icons %}
+
+<section class="dashboard__header">
+	<nav class="dashboard__nav"> 
+		<figure class="navbar__icon">
+			<a class="navbar__icon {% if ('profile' in server['REQUEST_URI']|split('/')) %}active"{% endif %}" href="/stampee/public/profile/index"">
+				{{ icons.get('cog', 'icon--m')}}
+				<figcaption class="icon-info">Mon Profil</figcaption>
+			</a>
+		</figure>
+		<figure class="navbar__icon">
+			<a class="navbar__icon {% if ('stamp' in server['REQUEST_URI']|split('/')) %}active"{% endif %}" href="/stampee/public/stamp/index"">
+				{{ icons.get('stamp', 'icon--m')}}
+				<figcaption class="icon-info">Mes timbres</figcaption>
+			</a>
+		</figure>
+		<figure class="navbar__icon">
+			<a class="navbar__icon {% if ('auction' in server['REQUEST_URI']|split('/')) %}active"{% endif %}" href="/stampee/public/auction/index"">
+				{{ icons.get('auction', 'icon--m')}}
+				<figcaption class="icon-info">Mes enchères</figcaption>
+			</a>
+		</figure>
+		<figure class="navbar__icon">
+			<a class="navbar__icon {% if ('favorite' in server['REQUEST_URI']|split('/')) %}active"{% endif %}" href="/stampee/public/favorite/index"">
+				{{ icons.get('heart', 'icon--m')}}
+				<figcaption class="icon-info">Mes favoris</figcaption>
+			</a>
+		</figure>
+		<figure class="navbar__icon">
+			<a class="navbar__icon {% if ('contact' in server['REQUEST_URI']|split('/')) %}active"{% endif %}" href="/stampee/public/contact/index"">
+				{{ icons.get('follow', 'icon--m')}}
+				<figcaption class="icon-info">Mes contact</figcaption>
+			</a>
+		</figure>
+	</nav>
+
+	<header class="header__title">
+		<h1>{{ title }}</h1>
+		{% if action is defined %}
+			<a href="add">
+				{{ icons.get(action, 'icon--l')}}
+			</a>
+		{% endif %}
+	</header>
+</section>

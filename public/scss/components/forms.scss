@@ -1,0 +1,79 @@
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: $spacing-m;
+    position: relative;
+    > *:not(:first-child) {
+      margin-left: $spacing-s;
+    }
+    max-width: 100%;
+  
+    label {
+      min-width: max-content;
+    }
+  }
+  
+  input[type='text'],
+  input[type='email'],
+  input[type='password'],
+  input[type='number'],
+  input[type='date'],
+  textarea,
+  select {
+    border-radius: 5px;
+    border: 1px solid $color-grey-dark;
+    outline: none;
+    padding: 0.5rem 1rem;
+    color: $color-text-dark;
+    width: 100%;
+    font-family: inherit;
+  }
+  
+  input[type='range'] {
+    color: $color-text-dark;
+    font-family: inherit;
+  }
+  
+  @media (min-width: $bp-xs) {
+    .form-group {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+  
+  .form__register {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: $color-primary;
+    padding: 2rem 1rem;
+  
+    .form-group {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 300px;
+      position: relative;
+      margin-bottom: 0.5rem;
+  
+      label {
+        color: $white;
+        align-self: flex-start;
+      }
+
+      svg { 
+        fill: $white;
+      }
+    }
+  }
+  
+  .form__title {
+    color: $white;
+    text-align: center;
+    max-width: 30ch;
+  }
+
+  

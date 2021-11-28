@@ -1,0 +1,58 @@
+/////////////////////////
+// MARGES DE SÉCURITÉ //
+///////////////////////
+
+// marges de sécurité uniquement pour les <section> dont on veut une marge blanche apparente sur mobile
+// entre le contenu et la fenêtre (!= header/footer)
+section {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+article.auction {
+  padding: 1rem;
+}
+
+/////////////////////////
+// RYTHMES VERTICAUX //
+///////////////////////
+
+svg + figcaption,
+svg + span,
+svg + svg,
+button + button {
+  margin-left: $spacing-m;
+}
+
+li + * {
+  margin-top: $spacing-s;
+}
+
+ul + *,
+p + *,
+.form-group + *,
+blockquote + *,
+h2 + *,
+input + label {
+  margin-top: $spacing-m;
+}
+.header__title + *,
+section + *,
+main + *,
+form + *,
+h3 + *,
+fieldset + *{
+  margin-top: $spacing-l;
+}
+
+h3 + ul {
+  margin-top: $spacing-s;
+}
+
+section {
+  padding-bottom: $spacing-l;
+}
+
+legend {
+  margin-bottom: 3rem;
+}

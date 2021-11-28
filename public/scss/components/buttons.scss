@@ -1,0 +1,52 @@
+%button {
+    align-items: center;
+    border: none;
+    border-radius: 10px;
+    color: $white;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    outline: none;
+    padding: $spacing-s $spacing-m;
+    width: fit-content;
+    text-transform: uppercase;
+    font-family: inherit;
+    font-size: inherit;
+  }
+  
+  .filter-button {
+    @extend %button;
+    background-color: $color-primary;
+  }
+  
+  .bet-button {
+    @extend %button;
+    background-color: $color-tertiary;
+
+    &:disabled {
+      cursor: not-allowed;
+      background-color: $color-grey-medium;
+      color: $white;
+    }
+  }
+
+  .submit-button {
+    @extend %button;
+    background-color: transparent;
+    text-transform: lowercase;
+    > svg {
+      margin-left: $spacing-s;
+      fill: $white;
+    }
+  }
+
+  .submit-button--primary {
+    @extend %button;
+    background-color: $color-primary;
+    color: $white;
+    > svg {
+      margin-left: $spacing-m;
+      fill: $white;
+    }
+  }
+  

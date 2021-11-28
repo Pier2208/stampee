@@ -1,0 +1,66 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+
+	{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Enchères', 'action': 'add'} only %}
+	<section class="dashboard">
+		{% if auctions|length == 0 %}
+			<p class="dashboard__message">Vous n'avez aucune enchère dans votre album.</p>
+		{% else %}
+			<div class="grid__cards">
+				{% for auction in auctions %}
+					<!-- CARD -->
+					<article class="card {% if auction.published %}published{% endif %}">
+						<header class="card__header">
+							<h3>{{auction.auctionName }}</h3>
+							{{ icons.get('heart', 'icon') }}
+							<div class="chip">Lot #{{ auction.auctionId}}</div>
+							<div class="chip large">
+								{% if auction.statusKey is same as "expired" %}
+									Prix final:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% elseif auction.statusKey is same as "forthcoming"  %}
+									Prix de lancement:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% else %}
+									Prix courant:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% endif %}
+							</div>
+						</header>
+
+						<div class="card__image">
+							<figure>
+								<img src="{{ auction[0].image }}" alt="{{ auction[0].stampName }}"/>
+							</figure>
+						</div>
+
+						<div class="card__footer">
+							<div class="chip light status">{{ auction.status }}</div>
+							{{ icons.get('menu', 'icon--m card__menu') }}
+						</div>
+						{% if auction.statusKey is same as 'forthcoming' %}
+							<div class="card__controls">
+								<a href="select?auction={{auction.auctionId}}">{{ icons.get('edit', 'icon--m')}}</a>
+								<a href="delete?auction={{auction.auctionId}}">{{ icons.get('delete', 'icon--m')}}</a>
+								{% if auction.published %}
+									<a href="publish?auction={{auction.auctionId}}&publish=0">{{ icons.get('unpublish', 'icon--m')}}</a>
+								{% else %}
+									<a href="publish?auction={{auction.auctionId}}&publish=1">{{ icons.get('publish', 'icon--m')}}</a>
+								{% endif %}
+							</div>
+						{% else %}
+							{% if auction.published %}
+								<div class="card__controls">
+									<a href="/stampee/public/gallery/select?auction={{auction.auctionId}}">{{ icons.get('see', 'icon--m')}}</a>
+								</div>
+							{% endif %}
+						{% endif %}
+					</article>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}

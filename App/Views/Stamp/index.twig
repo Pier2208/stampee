@@ -1,0 +1,26 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Timbres', 'action': 'add'} only %}
+	<section class="dashboard">
+		{% if stamps|length == 0 %}
+			<p class="dashboard__message">Vous n'avez aucun timbre dans votre album.</p>
+		{% else %}
+			<div class="grid__stamps">
+				{% for stamp in stamps %}
+					<article class="stamp">
+						<figure class="stamp__img">
+							<img src="{{ stamp.url|e }}" alt="{{ stamp.stampName|e }}"/>
+						</figure>
+						<div class="stamp__controls">
+							<a href="select?stamp={{stamp.stampId}}">{{ icons.get('edit', 'icon--m')}}</a>
+							<a data-loader href="delete?stamp={{stamp.stampId}}">{{ icons.get('delete', 'icon--m')}}</a>
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</section>
+{% endblock %}

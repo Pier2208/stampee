@@ -1,0 +1,32 @@
+.results {
+    max-width: $width-m;
+    padding: 0.5rem 1rem;
+    margin-right: auto;
+    margin-left: auto;
+  
+    &__sort {
+      display: flex;
+      align-items: center;
+    }
+  
+    &__display {
+      display: flex;
+      align-items: center;
+  
+      > h2 {
+        font-weight: 400;
+      }
+    }
+  }
+  
+  @media (min-width: $bp-xxs) {
+    .results {
+      &__sort {
+        align-items: center;
+        > *:not(:first-child) {
+          margin-left: $spacing-s;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,83 @@
+.hero {
+    padding-top: 1rem;
+    max-width: $width-l;
+    margin-right: auto;
+    margin-left: auto;
+  
+    // titre, logo et img
+    &__header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $color-grey-light;
+  
+      &--title {
+        width: 100%;
+        margin-top: $spacing-m;
+        padding: $spacing-m;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        justify-content: center;
+  
+        > h1 {
+          max-width: 30ch;
+          margin-top: $spacing-m;
+        }
+      }
+    }
+  
+    // images
+    &__img {
+      height: 250px;
+      width: 100%;
+      overflow: hidden;
+      &--secondary {
+        display: none;
+      }
+    }
+  }
+  
+  @media (min-width: $bp-s) {
+    .hero {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: max-content;
+  
+      &__header {
+        grid-column: 1;
+        justify-content: space-between;
+        padding-bottom: 0;
+        img {
+          height: 200px;
+          width: 100%;
+          overflow: hidden;
+          align-self: flex-end;
+        }
+        &__title {
+          height: 100%;
+        }
+      }
+    }
+    .form__register {
+      grid-column: 2;
+    }
+  }
+  
+  @media (min-width: $bp-l) {
+    .hero {
+      display: grid;
+      grid-template-columns: 2fr 2fr 1fr;
+  
+      &__img--secondary {
+        display: block;
+        grid-column: 3;
+        margin-top: 0;
+        img {
+          height: 100%;
+        }
+      }
+    }
+  }
+  

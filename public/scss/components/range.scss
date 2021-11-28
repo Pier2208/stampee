@@ -1,0 +1,20 @@
+.range {
+    padding: 1rem;
+    background-color: $color-grey-medium;
+    border-radius: 10px;
+    width: 100%;
+
+    &__header {
+        color: $black;
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: $spacing-m;
+        font-family: $font-display;
+    }
+
+    &__body {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+}

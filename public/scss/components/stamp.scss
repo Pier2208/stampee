@@ -1,0 +1,43 @@
+.stamp {
+  height: max-content;
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: $spacing-m;
+  position: relative;
+
+  &__img {
+    width: 100%;
+    height: auto;
+    cursor: pointer;
+  }
+
+  &__controls {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: -$spacing-s;
+    transition: opacity 200ms ease-in-out;
+    display: flex;
+    flex-direction: column;
+    > * {
+      margin: 0;
+    }
+
+    svg {
+      background-color: $color-grey-light;
+      fill: $color-grey-dark;
+      padding: $spacing-s;
+      width: 40px;
+      height: 40px;
+      transition: fill 200ms ease-in-out;
+
+      &:hover {
+        fill: $color-primary;
+      }
+    }
+  }
+
+  &:hover &__controls {
+    opacity: 1;
+  }
+}

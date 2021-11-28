@@ -1,0 +1,43 @@
+.auction {
+  &__header {
+    display: grid;
+    grid-template-columns: 1fr minmax(auto, $width-m) 1fr;
+    justify-items: start;
+    gap: $spacing-l;
+    background-color: $color-primary;
+    color: $white;
+    padding: 5rem 1rem;
+
+    figure {
+      display: flex;
+      align-items: center;
+      grid-column: 2;
+    }
+  }
+
+  &__name {
+    font-size: 2.8rem;
+    max-width: 50ch;
+    grid-column: 2;
+  }
+
+  &__bet,
+  &__detail,
+  &__seller {
+    width: 100%;
+    margin-top: $spacing-m;
+  }
+}
+
+.last-auctions,
+.recommanded-auctions {
+  max-width: $width-m;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  margin-top: $spacing-l;
+}
+
+.hidden {
+  display: none;
+}

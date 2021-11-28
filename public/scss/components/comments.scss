@@ -1,0 +1,45 @@
+.comment + .comment {
+    margin-top: $spacing-l;
+  }
+  
+  .comments {
+    max-width: $width-s;
+    margin: 0 auto;
+    padding: $spacing-s $spacing-m;
+  }
+  
+  .comment {
+    width: 100%;
+  
+    display: grid;
+    column-gap: $spacing-m;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: auto;
+  
+    &__avatar {
+      grid-column: 1;
+    }
+  
+    &__content {
+      grid-column: 2;
+  
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      row-gap: $spacing-m;
+  
+      &--detail {
+        grid-column: 1;
+      }
+  
+      &--action {
+        grid-column: 2;
+      }
+    }
+  }
+  
+  .nested {
+    padding-left: $spacing-l;
+    padding-right: $spacing-l;
+  }
+  

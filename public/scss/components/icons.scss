@@ -1,0 +1,51 @@
+.icon {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    &--m {
+      width: 25px;
+      height: 25px;
+      cursor: pointer;
+    }
+    &--l {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+    &--xl {
+      width: 100px;
+      height: 100px;
+      cursor: pointer;
+    }
+  }
+  
+  .icon-info {
+    display: none;
+  }
+  
+  .icon-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .icon + .icon {
+    margin-left: $spacing-m;
+  }
+  
+  @media (min-width: $bp-s) {
+    .icon-info {
+      display: block;
+    }
+  }
+  
+  @media (min-width: $bp-m) {
+    .icon {
+      width: 25px;
+      height: 25px;
+      &--m {
+        width: 30px;
+        height: 30px;
+      }
+    }
+  }
+  

@@ -1,0 +1,154 @@
+:root {
+  font-size: 12px;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  line-height: 1.6;
+  vertical-align: baseline;
+}
+
+// Adaptation de la police
+@media (min-width: $bp-s) {
+  :root {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: $bp-m) {
+  :root {
+    font-size: 1rem;
+  }
+}
+
+body {
+  background-color: $white;
+  color: $color-text-darker;
+  font-family: $font-body;
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3,
+legend {
+  font-family: $font-display;
+  font-weight: 300;
+}
+
+h1 {
+  font-size: 26px;
+}
+
+h2,
+legend {
+  font-size: 20px;
+}
+
+h3 {
+  font-size: 18.5px;
+}
+
+@media (min-width: $bp-m) {
+  h1 {
+    font-size: 32px;
+  }
+
+  h2,
+  legend {
+    font-size: 26px;
+  }
+}
+
+@media (min-width: $bp-xl) {
+  h1 {
+    font-size: 36px;
+  }
+
+  h2,
+  legend {
+    font-size: 30px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+}
+
+ul {
+  padding-left: 1.1rem;
+}
+
+li {
+  max-width: 70ch;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+blockquote {
+  color: $color-grey-darker;
+  display: block;
+  font-family: $font-display;
+  font-size: 1.3rem;
+  line-height: 2rem;
+  text-align: center;
+}
+
+figure ~ figcaption {
+  text-align: center;
+  margin-top: 1.5em;
+}
+
+blockquote::before {
+  font-size: 5rem;
+  color: $color-grey-darker;
+}
+
+blockquote::before {
+  content: '\201C';
+}
+
+.flex {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.visibility-hidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+// RESET legend and fieldset default styles
+legend {
+  display: table;
+  float: left;
+  padding: 0;
+  width: 100%;
+
+  + * {
+    clear: both;
+  }
+}
+
+fieldset {
+  border: 0;
+  padding: 0.01em 0 0 0;
+  min-width: 0;
+}
+
+body:not(:-moz-handler-blocked) fieldset {
+  display: table-cell;
+}

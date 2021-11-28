@@ -1,0 +1,42 @@
+.checkboxes {
+    padding: $spacing-m;
+    background-color: $color-grey-medium;
+    border-radius: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    align-self: flex-start;
+  }
+  
+  .checkbox {
+    display: flex;
+    align-items: center;
+  
+    input[type='checkbox'] {
+      appearance: none;
+      background-color: $white;
+      border: none;
+      border-radius: 5px;
+      height: 1.5em;
+      width: 1.5em;
+      margin-right: $spacing-s;
+      cursor: pointer;
+      position: relative;
+      font-family: inherit;
+  
+      &:checked {
+        background-color: $color-primary;
+  
+        &:checked:after {
+          content: '\2713';
+          font-size: 1.5em;
+          position: absolute;
+          top: -2px;
+          left: 3px;
+          color: $white;
+        }
+      }
+    }
+  }
+  

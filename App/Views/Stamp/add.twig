@@ -1,0 +1,185 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	{% if stamp.id is defined %}
+		{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Timbres > Editer un timbre'} only %}
+	{% else %}
+		{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Timbres > Ajouter un timbre'} only %}
+	{% endif %}
+
+	<section class="dashboard">
+		<form
+			method="POST" action="/stampee/public/stamp/{{ stamp.id ? 'update' : 'add' }}" enctype="multipart/form-data">
+			{# file input #}
+			<fieldset>
+				<legend class="header__title">
+					1. Sélectionnez une image de timbre
+					<div class="line"></div>
+				</legend>
+				<div class="fileSelect">
+					<div
+						class="fileSelect__input">
+						{# if input multiple, name should be file[] and 1st img accessible on $_FILES['file']['tmp_name'][0] #}
+						<input type="file" id="file-select" class="file-select" name="file" accept="image/*">
+						<label for="file-select">{{ icons.get('drop', 'icon--xl')}}</label>
+						<small>(cliquer pour sélectionner une image de timbre)</small>
+					</div>
+					<figure class="fileSelect__preview">
+						{% if stamp.url is defined %}
+							<img src={{ stamp.url }} alt={{ stamp.name }}/>
+						{% endif %}
+					</figure>
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend class="header__title">
+					2. Informations sur le timbre
+					<div class="line"></div>
+				</legend>
+				{# nom du timbre #}
+				<div class="form-group">
+					<label for="name">Nom:</label>
+					<input type="text" name="name" id="name" value="{{ stamp.name }}"/>
+					{% if errors['name'] is defined %}
+						<div class="error">
+							<small>{{ errors['name'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+				{# description #}
+				<div class="form-group">
+					<label for="description">Description:</label>
+					<textarea name="description" id="description" rows="5">{{ stamp.description }}</textarea>
+					{% if errors['description'] is defined %}
+						<div class="error">
+							<small>{{ errors['description'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# pays d'origine #}
+				<div class="form-group">
+					<label for="country">Pays d'origine:</label>
+					<select name="country" id="country">
+						<option value="">Sélectionner un pays</option>
+						{% for country in countries %}
+							<option value="{{ country.id|e }}" {% if country.id is same as stamp.country %} selected {% endif %}>
+								{{ country.name|e }}
+								({{ country.iso|e }})
+							</option>
+						{% endfor %}
+					</select>
+					{% if errors['country'] is defined %}
+						<div class="error">
+							<small>{{ errors['country'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# catégorie #}
+				<div class="form-group">
+					<label for="country">Catégorie:</label>
+					<select name="category" id="category">
+						<option value="">Sélectionner une catégorie</option>
+						{% for category in categories %}
+							<option value="{{ category.id|e }}" {% if category.id is same as stamp.category %} selected {% endif %}>
+								{{ category.name|e }}
+							</option>
+						{% endfor %}
+					</select>
+					{% if errors['category'] is defined %}
+						<div class="error">
+							<small>{{ errors['category'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# theme #}
+				<div class="form-group">
+					<label for="theme">Thème:</label>
+					<select name="theme" id="theme">
+						<option value="">Sélectionner un thème:</option>
+						{% for theme in themes %}
+							<option value="{{ theme.id|e }}" {% if theme.id is same as stamp.theme %} selected {% endif %}>
+								{{ theme.name|e }}
+							</option>
+						{% endfor %}
+					</select>
+					{% if errors['theme'] is defined %}
+						<div class="error">
+							<small>{{ errors['theme'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# condition #}
+				<div class="form-group">
+					<label for="condition">Etat du timbre:</label>
+					<select name="state" id="state">
+						<option value="">Sélectionner un état</option>
+						{% for condition in conditions %}
+							<option value="{{ condition.id|e }}" {% if condition.id is same as stamp.state %} selected {% endif %}>
+								{{ condition.name|e }}
+							</option>
+						{% endfor %}
+					</select>
+					{% if errors['condition'] is defined %}
+						<div class="error">
+							<small>{{ errors['condition'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# année de parution #}
+				<div class="form-group">
+					<label for="year">Année de parution:</label>
+					<input type="number" name="year" id="year" value="{{ stamp.year }}"/>
+					{% if errors['year'] is defined %}
+						<div class="error">
+							<small>{{ errors['year'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# largeur (en mm) #}
+				<div class="form-group">
+					<label for="width">Largeur (en mm):</label>
+					<input type="number" name="width" id="width" value="{{ stamp.width }}"/>
+					{% if errors['width'] is defined %}
+						<div class="error">
+							<small>{{ errors['width'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+				{# longueur (en mm) #}
+				<div class="form-group">
+					<label for="height">Longueur (en mm):</label>
+					<input type="number" name="height" id="height" value="{{ stamp.height }}"/>
+					{% if errors['height'] is defined %}
+						<div class="error">
+							<small>{{ errors['height'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+			</fieldset>
+
+			{# Submit form #}
+			<div class="form-group">
+				<button data-loader class="submit-button--primary" type="submit" name="submit">
+					<span>{{ stamp.id ? 'Editer' : 'Ajouter' }}
+						le timbre</span>
+					{{ icons.get('submit', 'icon--m') }}
+				</button>
+				{% if stamp.id is defined %}
+					<input type="hidden" name="id" value="{{ stamp.id }}">
+					<input type="hidden" name="url" value="{{ stamp.url ?? url }}">
+					<input type="hidden" name="public_id" value="{{ stamp.public_id }}">
+				{% endif %}
+			</div>
+		</form>
+	</section>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+.filters {
+    background-color: $color-grey-light;
+    overflow: hidden;
+    padding: 0;
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+  
+    &__header {
+      background-color: $color-primary;
+      color: $white;
+      padding: $spacing-s;
+  
+      .icon--m {
+        transition: transform 300ms ease;
+      }
+    }
+  
+    &__box {
+      display: grid;
+      grid-template-columns: 1fr minmax(auto, $width-m) 1fr;
+      row-gap: $spacing-m;
+      padding: 0rem;
+  
+      // animation de la hauteur
+      max-height: 0px;
+      transition: max-height 300ms ease, padding 400ms ease;
+  
+      // boutons et filtres sont positionnés dans la colonne centrale (grid-column: 2)
+      &--buttons {
+        grid-column: 2;
+        display: grid;
+        grid-auto-flow: column; // equivalent de flex-direction: row
+        justify-content: end; // pousser les boutons à la droite de la colonne
+      }
+  
+      &--selects {
+        grid-column: 2;
+        display: grid;
+        justify-content: center;
+        justify-content: start;
+        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+      }
+    }
+  }
+  
+  ///////////////////////
+  /// ANIMATIONS////////
+  
+  // montrer/cacher le menu dropdown des filtres
+  .open-filters {
+    max-height: 1000px;
+    padding: 3rem 1rem;
+  }
+  
+  // rotation de l'icône du menu dropdown
+  .rotate {
+    transform: rotate(180deg);
+  }
+  

@@ -1,0 +1,53 @@
+.date-picker {
+    padding: 1rem;
+    background-color: $color-grey-medium;
+    border-radius: 10px;
+    width: 100%;
+  
+    &__header {
+      align-items: center;
+      color: $black;
+      display: flex;
+      font-size: 1.1rem;
+      font-weight: 400;
+      justify-content: space-between;
+      margin-bottom: $spacing-m;
+      font-family: $font-display;
+    }
+  
+    &__body {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+  
+      &--startDate,
+      &--endDate {
+        display: flex;
+        align-items: center;
+        span {
+            margin-left: $spacing-s;
+        }
+      }
+  
+      select {
+        appearance: none;
+        background-color: $color-grey-light;
+        border: none;
+        border-radius: 10px;
+        padding: 0.1em 0.25em;
+        margin: 0;
+        width: fit-content;
+        font-family: inherit;
+        font-size: inherit;
+        cursor: pointer;
+        line-height: inherit;
+        outline: none;
+        margin-left: $spacing-s;
+  
+        option:checked {
+          background: $color-grey-light linear-gradient(to bottom, $color-grey-light 0%, $color-grey-light 100%);
+        }
+      }
+    }
+  }
+  

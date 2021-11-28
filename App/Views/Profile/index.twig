@@ -1,0 +1,98 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	{% include "Layout/dashboard-nav.twig" with {'title': 'Mon profile'} only %}
+	<section class="dashboard">
+		<form method="POST" action="/stampee/public/profile/index" enctype="multipart/form-data">
+			<fieldset>
+				<legend class="header__title">
+					1. Image de profile
+					<div class="line"></div>
+				</legend>
+				<div class="fileSelect profile-img">
+					<figure class="fileSelect__preview">
+						<img class="profile-img" src={{ profile.image }} alt="profil utilisateur"/>
+					</figure>
+					<div
+						class="fileSelect__input profile-img">
+						{# if input multiple, name should be file[] and 1st img accessible on $_FILES['file']['tmp_name'][0] #}
+						<input type="file" id="file-select" class="file-select" name="file" accept="image/*">
+						<label for="file-select">{{ icons.get('drop', 'icon--l')}}</label>
+					</div>
+				</div>
+			</fieldset>
+			<fieldset>
+				<legend class="header__title">
+					2. Mes informations personnelles
+					<div class="line"></div>
+				</legend>
+
+				{# firstname #}
+				<div class="form-group">
+					<label for="firstname">Prénom:</label>
+					<input type="text" name="firstname" id="firstname" value="{{ profile.firstname }}"/>
+					{% if errors['firstname'] is defined %}
+						<div class="error">
+							<small>{{ errors['firstname'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# nom du timbre #}
+				<div class="form-group">
+					<label for="lastname">Nom de famille:</label>
+					<input type="text" name="lastname" id="lastname" value="{{ profile.lastname }}"/>
+					{% if errors['lastname'] is defined %}
+						<div class="error">
+							<small>{{ errors['lastname'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# pays d'origine #}
+				<div class="form-group">
+					<label for="country">Pays d'origine:</label>
+					<select name="country" id="country">
+						<option value="">Sélectionner un pays</option>
+						{% for country in countries %}
+							<option value="{{ country.id|e }}" {% if country.id is same as profile.country_id %} selected {% endif %}>
+								{{ country.name|e }}
+								({{ country.iso|e }})
+							</option>
+						{% endfor %}
+					</select>
+					{% if errors['country'] is defined %}
+						<div class="error">
+							<small>{{ errors['country'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# date de naissance #}
+				<div class="form-group">
+					<label for="dob">Date de naissance:</label>
+					<input type="date" id="dob" name="dob" value="{{ profile.dob }}">
+					{% if errors['dob'] is defined %}
+						<div class="error">
+							<small>{{ errors['dob'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+			</fieldset>
+
+			{# Submit form #}
+			<div class="form-group">
+				<button data-loader class="submit-button--primary" type="submit" name="submit">
+					<span>Enregistrer</span>
+					{{ icons.get('submit', 'icon--m') }}
+				</button>
+				{% if auction[0].id is defined %}
+					<input type="hidden" name="id" value="{{ auction[0].id }}">
+				{% endif %}
+			</div>
+		</form>
+	</section>
+{% endblock %}

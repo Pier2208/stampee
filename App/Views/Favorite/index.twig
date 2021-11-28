@@ -1,0 +1,55 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Favoris'} only %}
+	<section class="dashboard">
+		{% if auctions|length == 0 %}
+			<p class="dashboard__message">Vous n'avez aucun favori dans votre album.</p>
+		{% else %}
+			<div
+				class="grid__cards">
+				<!-- CARD -->
+				{% for auction in auctions %}
+					<article class="card favorite" data-js-card={{ auction[0].id }}>
+						<header class="card__header">
+							<h3>{{ auction[0].name }}</h3>
+							{{ auction.isFavorite ? icons.get('heart', 'icon favorite') : icons.get('heart', 'icon') }}
+							<div class="chip">Lot #{{ auction[0].id }}</div>
+							<div class="chip large">
+								{% if auction.statusKey is same as "expired" %}
+									Prix final:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% elseif auction.statusKey is same as "forthcoming"  %}
+									Prix de lancement:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% else %}
+									Prix courant:
+									<b>{{ auction.current_price ?? auction.start_price }}$</b>
+								{% endif %}
+							</div>
+						</header>
+
+						<div class="card__image">
+							<figure>
+								<img src="{{ auction[1][0].url }}" alt="{{ auction[1][0].stampName }}"/>
+							</figure>
+						</div>
+
+						<div class="card__footer">
+							<div class="chip light status">{{ auction.status }}</div>
+							<div class="chip transparent views">22 vues</div>
+							<div class="chip transparent favorites">11 favoris</div>
+							<div class="chip transparent entrants">7 participants</div>
+							<a class="card__menu" href="/stampee/public/gallery/select?auction={{auction[0].id}}">
+								{{ icons.get('menu', 'icon--m') }}
+							</a>
+						</div>
+					</article>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</section>
+
+{% endblock %}

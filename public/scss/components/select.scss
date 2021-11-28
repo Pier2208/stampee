@@ -1,0 +1,41 @@
+.select {
+    padding: 1em;
+    background-color: $color-grey-medium;
+    border-radius: 10px;
+    width: 100%;
+  
+    &__header {
+      align-items: center;
+      color: $black;
+      display: flex;
+      font-size: 1.1rem;
+      font-weight: 400;
+      font-family: $font-display;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+  
+    > select {
+      appearance: none;
+      background-color: $white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.4em 0.7em;
+      margin: 0;
+      width: 100%;
+      font-family: inherit;
+      font-size: inherit;
+      cursor: inherit;
+      line-height: inherit;
+      outline: none;
+  
+      option {
+        color: $color-text-darker;
+      }
+  
+      option:checked {
+        background: $color-grey-medium linear-gradient(to bottom, $color-grey-medium 0%, $color-grey-medium 100%);
+      }
+    }
+  }
+  

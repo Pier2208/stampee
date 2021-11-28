@@ -1,0 +1,54 @@
+.fileSelect {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 3px dashed $color-grey-medium;
+  background-color: $color-grey-light;
+  height: 300px;
+  max-width: $width-m;
+  margin-right: auto;
+  margin-left: auto;
+
+  &.profile-img {
+    margin-right: 0;
+    margin-left: 0;
+    justify-content: flex-start;
+    border: none;
+    background-color: $white;
+    align-items: flex-end;
+    margin-top: 0;
+    height: 250px;
+  }
+
+  &__input {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &.profile-img {
+      align-self: flex-end;
+      margin-left: $spacing-m;
+    }
+  }
+
+  &__preview {
+    border: 1px solid $color-grey-medium;
+    img {
+      height: 200px;
+      width: auto;
+
+      // &.profile-img {
+      //   width: 250px;
+      //   height: 250px;
+      //   border-radius: 50%;
+      // }
+    }
+  }
+
+  small {
+    margin-top: $spacing-s;
+  }
+}
+
+.file-select {
+  display: none;
+}

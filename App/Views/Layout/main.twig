@@ -1,0 +1,145 @@
+{% import "icons.twig" as icons %}
+
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta name="author" content="Pierrick Le Roy"/>
+		<meta name="description" content="{% block description %}{{ meta['description'] }}{% endblock %}">
+		<link rel="preconnect" href="https://fonts.googleapis.com"/>
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+		<link href="https://fonts.googleapis.com/css2?family=Cinzel&family=Italiana&family=Lato:wght@300;400;700&display=swap" rel="stylesheet"/>
+		<link rel="stylesheet" href="/stampee/public/css/main.css"/>
+		<script type="module" src="/stampee/public/js/script.js" defer></script>
+		<title>
+			{% block title %}
+				{{ meta['title'] }}
+			{% endblock %}
+		</title>
+	</head>
+
+	{# BARRE DE NAVIGATION #}
+	<header
+		class="navbar">
+		<!-- NAVIGATION POUR LES UTILISATEURS CONNECTÉS -->
+		<div class="navbar__connected">
+			{% if session %}
+				<figure class="navbar__icon">
+					<figcaption class="icon-info">
+						<a href="/stampee/public/profile/index">
+							Bonjour {{ session.username }}!</a>
+					</figcaption>
+					{% if session.avatar %}
+						<img class="avatar" src={{ session.avatar }} alt="profile utilisateur"/>
+					{% else %}
+						{{ icons.get('avatar', 'icon')}}
+					{% endif %}
+				</figure>
+				<div class="navbar__loggedInMenu">
+					<figure class="navbar__icon">
+						<a class="navbar__icon" href="/stampee/public/auction/index">
+							<figcaption class="icon-info">Mes enchères</figcaption>
+							{{ icons.get('auction', 'icon')}}
+						</a>
+					</figure>
+					<figure class="navbar__icon">
+						<a class="navbar__icon" href="#">
+							<figcaption class="icon-info">Notifications</figcaption>
+							{{ icons.get('bell', 'icon')}}
+						</a>
+					</figure>
+					<figure class="navbar__icon">
+						<a class="navbar__icon" href="#">
+							<figcaption class="icon-info">Messages</figcaption>
+							{{ icons.get('message', 'icon')}}
+						</a>
+					</figure>
+					<figure>
+						<a class="navbar__icon" href="/stampee/public/auth/logout">
+							<figcaption class="icon-info">Déconnexion</figcaption>
+							{{ icons.get('logout', 'icon')}}
+						</a>
+					</figure>
+				</div>
+			{% else %}
+				<div class="navbar__loggedInMenu">
+					<figure class="navbar__icon">
+						<figcaption class="icon-info">
+							<a href="/stampee/public/home/login">Connexion</a>
+						</figcaption>
+						{{ icons.get('login', 'icon') }}
+					</figure>
+				</div>
+			{% endif %}
+		</div>
+		<!-- NAVIGATION PRINCIPALE-->
+		<div class="navbar__main">
+			<figure class="navbar__icon">
+				{{ icons.get('logo', 'icon--m') }}
+				<figcaption class="navbar__main--logo">
+					<a href="/stampee/public/home/index">Stampee</a>
+				</figcaption>
+			</figure>
+			<a href="encheres.html">Les enchères</a>
+			<a href="#">Les nouvelles</a>
+			<a href="#">Le blog du Lord</a>
+		</div>
+	</header>
+
+	<main class="container"> {% block content %}{% endblock %}
+		</main>
+
+		<footer>
+			<div class="container">
+				<div class="logo">
+					<div class="logo__icon">S</div>
+					<div class="logo__name">Stampee</div>
+				</div>
+				<ul class="links">
+					<li>A propos</li>
+					<li>Contactez-nous</li>
+					<li>Aide</li>
+				</ul>
+				<div class="infos">
+					<ul>
+						<li>
+							Devenir vendeur
+							<ul>
+								<li>Politique des ventes</li>
+								<li>Règles et conditions</li>
+								<li>FAQ vendeurs</li>
+							</ul>
+						</li>
+						<li>
+							Acheter sur Stampee
+							<ul>
+								<li>Conditions d'utilisation</li>
+								<li>FAQ acheteurs</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<ul class="newsletter">
+					<li>
+						S'abonner à l'infolettre
+						<ul>
+							<li>
+								<form method="POST">
+									<div class="form-group">
+										<label class="visibility-hidden" for="infolettre">S'abonner à l'infolettre</label>
+										<input type="email" name="infolettre" id="infolettre" placeholder="@"/>
+										{{ icons.get('submit', 'icon--m') }}
+									</div>
+								</form>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				<small class="copyright">&copy; Tous droits réservés - Stampee 2021</small>
+			</div>
+		</footer>
+		{# <script type="module" src="assets/js/script.js"></script> #}
+	</html>
+</body></html>

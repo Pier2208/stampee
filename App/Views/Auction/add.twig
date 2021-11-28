@@ -1,0 +1,128 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	{% if auction[0].id is defined %}
+		{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Enchères > Editer une enchère'} only %}
+	{% else %}
+		{% include "Layout/dashboard-nav.twig" with {'title': 'Mes Enchères > Ajouter une enchère'} only %}
+	{% endif %}
+
+	<section class="dashboard">
+		<form
+			method="POST" action="/stampee/public/auction/{{ auction[0].id ? 'update' : 'add' }}">
+
+			{# select stamps #}
+			<fieldset>
+				<legend class="header__title">
+					1. Sélectionnez le ou les timbres faisant partie de cette enchère
+					<div class="line"></div>
+				</legend>
+				<div class="form-group">
+					<label for="stamps">Sélectionnez un timbre (cmd/ctrl + click pour sélectionner plusieurs timbres):</label>
+					<select name="stamps[]" id="stamps" multiple>
+
+						{% if stamps is defined %}
+							{% for stamp in stamps %}
+								<option value={{ stamp.stampId }} selected>
+									{{ stamp.stampName }}
+								</option>
+							{% endfor %}
+						{% else %}
+							{% for stamp in auction[1] %}
+								<option value={{ stamp.stampId }} selected>
+									{{ stamp.stampName }}
+								</option>
+							{% endfor %}
+						{% endif %}
+
+					</select>
+					{% if errors['stamps'] is defined %}
+						<div class="error">
+							<small>{{ errors['stamps'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+			</fieldset>
+
+			<fieldset>
+				<legend class="header__title">
+					2. Informations sur l'enchère
+					<div class="line"></div>
+				</legend>
+
+				{# nom de l'enchère #}
+				<div class="form-group">
+					<label for="name">Nom de l'enchère:</label>
+					<input type="text" name="name" id="name" value="{{auction[0].name|e}}"/>
+					{% if errors['name'] is defined %}
+						<div class="error">
+							<small>{{ errors['name'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# description de l'enchère #}
+				<div class="form-group">
+					<label for="description">Description:</label>
+					<textarea name="description" id="description" cols="30" rows="10">{{auction[0].description|e}}</textarea>
+					{% if errors['description'] is defined %}
+						<div class="error">
+							<small>{{ errors['description'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# date de début #}
+				<div class="form-group">
+					<label for="start_date">Date de début de l'enchère:</label>
+					{# Transformer DATETIME 2021-09-01 14:04:40 => datetime-local 2021-09-01T14:04:40 #}
+					<input type="datetime-local" id="start_date" name="start_date" value="{{auction[0].start_date|replace({' ': 'T'} )}}">
+					{% if errors['start_date'] is defined %}
+						<div class="error">
+							<small>{{ errors['start_date'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# date de fin #}
+				<div class="form-group">
+					<label for="end_date">Date de fin de l'enchère:</label>
+					{# Transformer DATETIME 2021-09-01 14:04:40 => datetime-local 2021-09-01T14:04:40 #}
+					<input type="datetime-local" id="end_date" name="end_date" value="{{auction[0].end_date|replace({' ': 'T'} )}}">
+					{% if errors['end_date'] is defined %}
+						<div class="error">
+							<small>{{ errors['end_date'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+
+				{# prix de lancement #}
+				<div class="form-group">
+					<label for="start_price">Prix de lancement:</label>
+					<input type="number" name="start_price" id="start_price" value="{{auction[0].start_price|e}}"/>
+					{% if errors['start_price'] is defined %}
+						<div class="error">
+							<small>{{ errors['start_price'] }}</small>
+						</div>
+					{% endif %}
+				</div>
+			</fieldset>
+
+			{# Submit form #}
+			<div class="form-group">
+				<button class="submit-button--primary" type="submit" name="submit">
+					<span>{{ auction.id ? 'Editer' : 'Ajouter' }}
+						l'enchère</span>
+					{{ icons.get('submit', 'icon--m') }}
+				</button>
+				{% if auction[0].id is defined %}
+					<input type="hidden" name="id" value="{{ auction[0].id }}">
+				{% endif %}
+			</div>
+
+		</form>
+	</section>
+
+{% endblock %}

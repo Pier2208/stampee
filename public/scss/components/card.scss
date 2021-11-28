@@ -1,0 +1,145 @@
+.card {
+  border-radius: 10px;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.1);
+  height: max-content;
+  max-width: 335px;
+  position: relative;
+
+  &__controls {
+    opacity: 0;
+    position: absolute;
+    top: -$spacing-m;
+    left: -$spacing-s;
+    transition: opacity 200ms ease-in-out;
+    display: flex;
+    > * {
+      margin: 0;
+    }
+
+    svg {
+      background-color: $color-grey-light;
+      fill: $color-grey-dark;
+      padding: $spacing-s;
+      width: 40px;
+      height: 40px;
+      transition: fill 200ms ease-in-out;
+  
+      &:hover {
+        fill: $color-primary;
+      }
+    }
+  }
+
+  &:hover &__controls {
+    opacity: 1;
+  }
+
+  &__header {
+    background-color: $color-secondary;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: $spacing-m;
+    padding: 0.7rem 0.7rem 0;
+
+    > h3 {
+      color: $color-text-darker;
+      font-family: $font-display;
+      font-weight: 300;
+      grid-column: 1 / 4;
+    }
+
+    > .icon {
+      justify-self: end;
+      margin-top: 0;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 250px;
+    background-color: $color-grey-light;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    figure {
+      height: 200px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: $spacing-s 0;
+    }
+  }
+
+  &__footer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+    padding: 0.7rem;
+  }
+}
+
+.chip {
+  padding: 0.2rem;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  transform: translateY(50%);
+  color: $white;
+  grid-column: 1;
+  background-color: $color-grey-dark;
+}
+
+.large {
+  background-color: $color-primary;
+  grid-column: 2 / 5;
+}
+
+.light {
+  background-color: $color-grey-dark;
+  color: $color-text-light;
+  grid-column: 1 / -1;
+  transform: translateY(0%);
+}
+
+.transparent {
+  background-color: transparent;
+  border: 1px solid $color-grey-medium;
+  color: $color-grey-darker;
+  transform: translateY(0%);
+  align-self: center;
+}
+
+.views {
+  grid-column: 1;
+  grid-row: 2;
+  justify-self: start;
+  width: 100%;
+}
+
+.favorites {
+  grid-column: 2 / 4;
+  grid-row: 2;
+  justify-self: start;
+  width: 60%;
+}
+
+.entrants {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  justify-self: start;
+  width: 60%;
+}
+
+.card__menu {
+  grid-column: 4;
+  grid-row: 3;
+  justify-self: center;
+}
+
+.favorite {
+  fill: $color-tertiary;
+}

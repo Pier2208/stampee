@@ -1,0 +1,290 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+	<section class="hero">
+		<header class="hero__header">
+			<div class="hero__header--title">
+				{{ icons.get('logo', 'icon-logo') }}
+				<h1>Le site officiel d'enchères philatéliques du lord Stampee</h1>
+			</div>
+			<img class="hero__img" src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629333011/stampee/hero1.jpg" alt=""/>
+		</header>
+
+		<form method="POST" class="form__register" action="login" novalidate>
+			<h2 class="form__title">
+				Connectez-vous à votre compte Stampee!
+			</h2>
+			<div class="form-group">
+				<label for="username">Nom d'utilisateur ou courriel:</label>
+				<input type="text" name="username" id="username" value="{{ user.username }}"/>
+				{% if errors['username'] is defined %}
+					<div class="error">
+						<small>{{ errors['username'] }}</small>
+					</div>
+				{% endif %}
+			</div>
+			<div class="form-group">
+				<label for="password">Mot de passe:</label>
+				<input type="password" name="password" id="password" value="{{ user.password }}"/>
+				{% if errors['password'] is defined %}
+					<div class="error">
+						<small>{{ errors['password'] }}</small>
+					</div>
+				{% endif %}
+			</div>
+			<button class="submit-button" type="submit" name="submit">
+				<span>Je me connecte</span>
+				{{ icons.get('submit', 'icon--m') }}</button>
+		</form>
+
+		<figure class="hero__img--secondary">
+			<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629347471/stampee/hero2.jpg" alt=""/>
+		</figure>
+	</section>
+
+	<!-- SECTION TEMOIGNAGES -->
+	<section class="testimonials">
+		<header class="header__title">
+			<h2>Témoignages</h2>
+			<div class="line"></div>
+		</header>
+
+		<div class="slider">
+			<div
+				class="slides">
+				<!-- carte témoignage 1 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 2 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 3 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 4 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 5 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 6 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 7 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 8 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 9 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+
+				<!-- carte témoignage 10 -->
+				<figure class="testimonial">
+					<blockquote>J'ai trouvé sur Stampee quelques un des timbres dont je suis le plus fier.</blockquote>
+					<figcaption>
+						<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629386360/stampee/paul_simard.jpg" alt="Photo d'un membre Stampee"/>
+						<i>Paul Simard - Membre Stampee</i>
+					</figcaption>
+				</figure>
+			</div>
+			<!-- SLIDE CONTROLS -->
+			{{ icons.get('chevron-left', 'icon--m slider--left') }}
+			{{ icons.get('chevron-right', 'icon--m slider--right') }}
+		</div>
+	</section>
+
+	<section class="presentation">
+		<header class="header__title">
+			<h2>Un outil puissant au service de votre passion.</h2>
+			<div class="line"></div>
+		</header>
+		<div class="presentation__grid">
+			<ul>
+				<li>Des milliers d’enchères à consulter 24/24</li>
+				<li>Filtrer facilement nos enchères et recevez des notifications sur votre mobile</li>
+				<li>Communiquer avec les autres membres par chat et messagerie</li>
+				<li>Notre expertise à votre service en tout temps</li>
+				<li>Filtrer facilement nos enchères et recevez des notifications sur votre mobile</li>
+				<li>Filtrer facilement nos enchères et recevez des notifications sur votre mobile</li>
+			</ul>
+			<figure>
+				<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629409328/stampee/cards.jpg" alt="enchères"/>
+			</figure>
+		</div>
+	</section>
+
+	<!-- SECTION TOP 10 -->
+	<section class="last-auctions">
+		<header class="header__title">
+			<h2>Les dernières nouveautés</h2>
+			<div class="line"></div>
+		</header>
+		<div class="slider">
+			<div
+				class="slides">
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						{{ icons.get('heart', 'icon') }}
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						{{ icons.get('menu', 'icon--m card__menu') }}
+					</div>
+				</article>
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						{{ icons.get('heart', 'icon') }}
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628088529/stampee/Estonian-postage-stamps.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						{{ icons.get('menu', 'icon--m card__menu') }}
+					</div>
+				</article>
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						{{ icons.get('heart', 'icon') }}
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628088529/stampee/Estonian-postage-stamps.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						{{ icons.get('menu', 'icon--m card__menu') }}
+					</div>
+				</article>
+			</div>
+			<!-- SLIDE CONTROLS -->
+			{{ icons.get('chevron-left', 'icon--m slider--left') }}
+			{{ icons.get('chevron-right', 'icon--m slider--right') }}
+		</div>
+	</section>
+
+	<!-- Mot du Lord -->
+	<section class="lord">
+		<header class="header__title">
+			<h2>Un mot du Lord Stampee</h2>
+			<div class="line"></div>
+		</header>
+
+		<div class="lord__grid">
+			<figure class="lord__image">
+				<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1629407127/stampee/lord_stampee.jpg" alt="Lord Stampee"/>
+			</figure>
+			<div class="lord__text">
+				<blockquote>Traditionnellement britannique, résolument moderne.</blockquote>
+				<p>
+					Moi, Lord Reginald Stampee, duc de Worcessteshear et philatéliste depuis ma tendre enfance au milieu des
+																																								années cinquante, suis mondialement réputé pour l’organisation de mes enchères philatéliques.
+				</p>
+				<p>
+					Résolument tourné vers l’avenir, mon souhait est maintenant d’offrir une expérience similaire en ligne qui
+																																								puisse tout aussi plaire à un public de non-initié.
+				</p>
+				<p>Chaque timbre est un voyage unique, un bout d'histoire à conserver précieusement.</p>
+			</div>
+		</div>
+	</section>
+
+{% endblock %}

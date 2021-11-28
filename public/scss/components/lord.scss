@@ -1,0 +1,23 @@
+.lord {
+    &__grid {
+      display: grid;
+      align-items: center;
+      justify-items: center;
+      row-gap: $spacing-l;
+      max-width: $width-m;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  
+    &__image {
+      max-width: 400px;
+    }
+  }
+  
+  @media (min-width: $bp-xs) {
+    .lord__grid {
+      column-gap: $spacing-l;
+      grid-template-columns: repeat(2, minmax(100px, 1fr));
+    }
+  }
+  

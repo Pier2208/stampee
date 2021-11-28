@@ -1,0 +1,42 @@
+.grid {
+  &__cards {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(335px, max-content));
+    justify-content: center;
+    padding: 3rem 1rem;
+  }
+
+  &__stamps {
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 252px;
+    justify-content: center;
+    align-items: center;
+    column-gap: $spacing-m;
+  }
+
+  &__auction {
+    max-width: 1380px;
+    display: grid;
+    row-gap: $spacing-l;
+    column-gap: $spacing-l;
+    grid-template-columns: repeat(auto-fill, minmax(450px, max-content));
+    padding: 3rem 1rem;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+  }
+}
+
+@media (min-width: $bp-m) {
+  .grid__stamps {
+    display: block;
+    column-count: 4;
+    column-gap: $spacing-m;
+    column-width: auto;
+    width: $width-s;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}

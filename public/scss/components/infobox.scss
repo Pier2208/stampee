@@ -1,0 +1,64 @@
+.infobox {
+    background-color: $color-grey-light;
+    border-radius: 10px;
+    height: fit-content;
+    padding: 2.5rem 1.5rem 1.5rem;
+    position: relative;
+  
+    figure {
+      display: flex;
+      align-items: center;
+  
+      + figure {
+        margin-top: 1rem;
+      }
+    }
+  
+    form {
+      display: flex;
+      button {
+        margin-left: $spacing-m;
+      }
+    }
+  
+    &__prop {
+        font-weight: 700;
+    }
+    
+    &__title {
+        color: $white;
+        background-color: $color-primary;
+        width: fit-content;
+        padding: $spacing-s $spacing-m;
+        border-radius: 10px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateY(-50%);
+        font-weight: 300;
+    }
+  
+    &__aside {
+      border: 1px solid $color-grey-dark;
+      border-radius: 15px;
+      padding: 0.5rem;
+    }
+  
+    &__payment-info {
+      display: flex;
+      align-items: center;
+       > *:not(:first-child) {
+         margin-left: $spacing-s;
+       }
+    }
+
+    &__detail {
+      margin-top: $spacing-m;
+    }
+
+    &__msg {
+      color: $color-tertiary;
+      font-size: 0.8rem;
+    }
+  } 
+  

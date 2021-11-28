@@ -1,0 +1,705 @@
+{% import "icons.twig" as icons %}
+
+{% extends "Layout/main.twig" %}
+
+{% block content %}
+
+	<article class="auction">
+		<header class="auction__header">
+			<figure>
+				{{ icons.get('return', 'icon--m') }}
+				<figcaption>
+					<a href="/stampee/public/gallery/index">Retour aux résultats</a>
+				</figcaption>
+			</figure>
+			<h1 class="auction__name">LOT #{{ auction[0].id }}
+				-
+				{{ auction[0].name }}</h1>
+		</header>
+
+		<div class="grid__auction">
+			<section
+				class="auction__image">
+				<!-- COMPOSANT BOITE D'IMAGES -->
+				<div
+					class="lightbox">
+					<!-- container image -->
+					<div class="lightbox__container">
+						<figure class="magnify-wrapper">
+							<img src="{{ auction[1][0].url }}" alt="{{ auction[1][0].stampName }}"/>
+							<div class="large-img"></div>
+						</figure>
+					</div>
+
+					<!-- thumbnails -->
+					{% if auction[1]|length > 1  %}
+						<div class="lightbox__thumbnails">
+							{% for stamp in auction[1] %}
+								<figure class="lightbox__thumbnail">
+									<img src={{ stamp.url}} alt="{{ stamp.stampName }}"/>
+								</figure>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+			</section>
+
+			<!-- SECTION DETAIL DE L'OFFRE -->
+			<section class="auction__detail">
+				<div class="infobox">
+					<h2 class="infobox__title">L'offre en un clin d'oeil</h2>
+					<h3>Description de l'enchère</h3>
+					{{ auction[0].description }}
+					{% for stamp in auction[1] %}
+						<div class="infobox__detail hidden" data-js-id="{{ stamp.stampName }}">
+							<h3>{{ stamp.stampName }}</h3>
+							<ul>
+								<li>
+									<span class="infobox__prop">Catégorie:</span>
+									<span>{{ stamp.stampCategory }}</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Pays:</span>
+									<span>{{ stamp.stampCountry }}</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Année:</span>
+									<span>{{ stamp.stampYear}}</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Description:</span>
+									<span>{{ stamp.stampDescription }}</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Dimensions:</span>
+									<span>{{ stamp.stampWidth / 100}}
+										x
+										{{ stamp.stampHeight / 100}}
+										cms</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Condition:</span>
+									<span>{{ stamp.stampCondition }}</span>
+								</li>
+								<li>
+									<span class="infobox__prop">Theme:</span>
+									<span>{{ stamp.stampTheme}}</span>
+								</li>
+							</div>
+
+
+						</ul>
+					{% endfor %}
+				</div>
+			</section>
+
+			<!-- SECTION DEPOT MISE -->
+			<section class="auction__bet">
+				<div class="infobox">
+					{% if auction.statusKey is same as "expired" %}
+						<h2 class="infobox__title">Historique de l'enchère</h2>
+						<ul>
+							<li>
+								<span class="infobox__prop">Prix final</span>: ${{ offers[0].current_price ?? auction[0].start_price }}
+							</li>
+							<li>
+								<span class="infobox__prop">Acquéreur</span>:
+								{{ offers[0].username ? offers[0].username : "L'enchère n'a pas trouvé d'acquéreur"}}
+							</li>
+							<li>
+								<span class="infobox__prop">Historique des mises</span>:
+								<ul>
+									{% if offers|length > 0 %}
+										{% for offer in offers %}
+											<li>{{offer.username}}
+												a renchéri à
+												{{offer.current_price}}
+												le
+												{{ offers[0].date|format_datetime('full', 'full', locale='fr') }}
+											</li>
+										{% endfor %}
+									{% else %}
+										<li>n/a</li>
+									{% endif %}
+								</ul>
+							</li>
+
+						</ul>
+					{% elseif auction.statusKey is same as "forthcoming" %}
+						<h2 class="infobox__title">Dépôt d'une mise</h2>
+						<p>Les mises ne sont pas encore ouvertes!</p>
+						<p>
+							<u>Ouverture des mises</u>:
+							<br/>
+							le
+							<strong>{{ auction[0].start_date|format_datetime('full', 'full', locale='fr') }}.</strong>
+							<br/>
+							Ajouter cette offre à vos favoris pour ne pas l'oublier!
+						</p>
+					{% elseif auction[0].username is same as session.username %}
+						<h2 class="infobox__title">Historique des mises</h2>
+						<p>Vous êtes le créateur de cette enchère!</p>
+						{% if offers|length < 1 %}
+							<small class="infobox__msg">Il n'y a encore aucun participant à cette enchère!</small>
+						{% else %}
+							{% for offer in offers %}
+								<li>{{offer.username}}
+									a renchéri à
+									${{offer.current_price}}
+									le
+									{{ offers[0].date|format_datetime('full', 'full', locale='fr') }}
+								</li>
+							{% endfor %}
+						{% endif %}
+					{% else %}
+						<h2 class="infobox__title">Dépôt d'une mise</h2>
+						<p>Prix courant: ${{ offers[0].current_price ?? auction[0].start_price }}
+							<small>
+								(mise minimale: 10% du prix courant, soit 
+								${{ ((offers[0].current_price ??
+								 auction[0].start_price) + (offers[0].current_price ?? auction[0].start_price) * 10 / 100)|round }}
+								)
+							</small>
+						</p>
+						{% if offers[0].username is defined %}
+							{% if offers[0].username is same as session.username %}
+								<small class="infobox__msg">Félicitations!<br /> Vous êtes le détenteur de la dernière mise en date du <br />
+									{{ offers[0].date|format_datetime('full', 'full', locale='fr') }}.</small>
+							{% else %}
+								<small class="infobox__msg">
+									Dernière mise:
+									{{ offers[0].username }}
+									le
+									{{ offers[0].date|format_datetime('full', 'full', locale='fr') }}
+								</small>
+							{% endif %}
+						{% else %}
+							<small class="infobox__msg">Personne n'a encore misé. Soyez le premier!</small>
+						{% endif %}
+						<form method="POST" action="/stampee/public/gallery/select?auction={{auction[0].id}}">
+							<div class="form-group">
+								<label class="visibility-hidden" for="bet">Placer une mise (min. 10% du prix courant)</label>
+								<input type="number" min={{ (offers[0].current_price ?? auction[0].start_price) + ((offers[0].current_price ?? auction[0].start_price) * 10 / 100)|round }} value={{ (offers[0].current_price ?? auction[0].start_price) + ((offers[0].current_price ?? auction[0].start_price) * 10 / 100)|round }} name="bet" id="bet"/>
+								{% if errors['bet'] is defined %}
+									<div class="error">
+										<small>{{ errors['bet'] }}</small>
+									</div>
+								{% endif %}
+							</div>
+							<button {% if offers[0].username is same as session.username or auction[0].username is same as session.username %} disabled {% endif %} type="submit" name="submit" class="bet-button">miser</button>
+						</form>
+						<div class="infobox__payment-info">
+							<small>Paiement facile et sécurisé par:</small>
+							{{ icons.get('visa', 'icon--m') }}
+							{{ icons.get('paypal', 'icon--m') }}
+							{{ icons.get('mastercard', 'icon--m') }}
+							{{ icons.get('googlePay', 'icon--m') }}
+						</div>
+					{% endif %}
+				</div>
+			</section>
+
+			<!-- SECTION TOUT SUR LE VENDEUR -->
+			<section class="auction__seller">
+				<div class="infobox">
+					<h2 class="infobox__title">Tout sur le vendeur</h2>
+					<figure class="logo">
+						<img class="avatar" src={{ auction[0].userImage }} alt="profile utilisateur"/>
+						<div>{{ auction[0].username }}</div>
+					</figure>
+
+					{# <p class="infobox__aside">
+					Ceci est une enchère officielle Stampee. Pour toutes questions, veuillez contacter notre équipe.
+					</p> #}
+					<figure>
+						{{ icons.get('contact', 'icon--m') }}
+						<figcaption>Contacter
+							{{ auction[0].username }}</figcaption>
+					</figure>
+					<figure>
+						{{ icons.get('seller', 'icon--m') }}
+						<figcaption>Suivre
+							{{ auction[0].username }}</figcaption>
+					</figure>
+				</div>
+			</section>
+		</div>
+	</article>
+
+	<!-- SECTION COMMENTAIRES -->
+	<section class="auction__comments">
+		<header class="header__title">
+			<div class="flex">
+				<h2>Commentaires</h2>
+				<figure>
+					{{ icons.get('write', 'icon') }}
+					<figcaption class="icon-info">Ecrire un commentaire</figcaption>
+				</figure>
+
+			</div>
+			<div class="line"></div>
+		</header>
+		<div
+			class="comments">
+			<!-- COMMENTAIRE -->
+			<article
+				class="comment">
+				<!-- col img auteur -->
+				<figure class="comment__avatar">
+					<svg class="icon--m">
+						<use xlink:href="assets/svg/sprite.svg#avatar-dark" href="assets/svg/sprite.svg#avatar-dark"/>
+					</svg>
+				</figure>
+				<!-- col comment contenu -->
+				<div class="comment__content">
+					<div class="comment__content--detail">
+						<h3 class="comment__author">Paul</h3>
+						<small class="comment__date">13 juin 2021</small>
+					</div>
+					<div class="comment__content--action">
+						<figure class="navbar__icon">
+							{{ icons.get('reply', 'icon--m') }}
+							<figcaption class="icon-info">Répondre</figcaption>
+						</figure>
+					</div>
+					<p class="comment__content--body">
+						Sed ut perspiciatis, unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam
+																																																																																																																																																																																																																																		                rem aperiam eaque ipsa, quae ab illo inventore veritatis
+					</p>
+				</div>
+			</article>
+
+			<!-- COMMENTAIRE -->
+			<article
+				class="comment">
+				<!-- col img auteur -->
+				<figure class="comment__avatar">
+					<svg class="icon--m">
+						<use xlink:href="assets/svg/sprite.svg#avatar-dark" href="assets/svg/sprite.svg#avatar-dark"/>
+					</svg>
+				</figure>
+				<!-- col comment contenu -->
+				<div class="comment__content">
+					<div class="comment__content--detail">
+						<h3 class="comment__author">Sonia</h3>
+						<small class="comment__date">11 juin 2021</small>
+					</div>
+					<div class="comment__content--action">
+						<figure class="navbar__icon">
+							{{ icons.get('reply', 'icon--m') }}
+							<figcaption class="icon-info">Répondre</figcaption>
+						</figure>
+					</div>
+					<p class="comment__content--body">
+						Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut
+																																																																																																																																																																																																																																		                aliquid ex ea commodi consequatur?
+					</p>
+				</div>
+			</article>
+
+			<!-- COMMENTAIRE -->
+			<article
+				class="comment nested">
+				<!-- col img auteur -->
+				<figure class="comment__avatar">
+					<svg class="icon--m">
+						<use xlink:href="assets/svg/sprite.svg#avatar-dark" href="assets/svg/sprite.svg#avatar-dark"/>
+					</svg>
+				</figure>
+				<!-- col comment contenu -->
+				<div class="comment__content">
+					<div class="comment__content--detail">
+						<h3 class="comment__author">Peter</h3>
+						<small class="comment__date">11 juin 2021</small>
+					</div>
+					<div class="comment__content--action">
+						<figure class="navbar__icon">
+							{{ icons.get('reply', 'icon--m') }}
+							<figcaption class="icon-info">Répondre</figcaption>
+						</figure>
+					</div>
+					<p class="comment__content--body">
+						Nemo enim ipsam voluptatem, quia voluptas sit, aspernatur aut odit aut fugit.
+					</p>
+				</div>
+			</article>
+
+			<!-- COMMENTAIRE -->
+			<article
+				class="comment nested">
+				<!-- col img auteur -->
+				<figure class="comment__avatar">
+					<svg class="icon--m">
+						<use xlink:href="assets/svg/sprite.svg#avatar-dark" href="assets/svg/sprite.svg#avatar-dark"/>
+					</svg>
+				</figure>
+				<!-- col comment contenu -->
+				<div class="comment__content">
+					<div class="comment__content--detail">
+						<h3 class="comment__author">Marc</h3>
+						<small class="comment__date">12 juin 2021</small>
+					</div>
+					<div class="comment__content--action">
+						<figure class="navbar__icon">
+							{{ icons.get('reply', 'icon--m') }}
+							<figcaption class="icon-info">Répondre</figcaption>
+						</figure>
+					</div>
+					<p class="comment__content--body">
+						Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut
+																																																																																																																																																																																																																																		                aliquid ex ea commodi consequatur?
+					</p>
+				</div>
+			</article>
+
+			<!-- COMMENTAIRE -->
+			<article
+				class="comment">
+				<!-- col img auteur -->
+				<figure class="comment__avatar">
+					<svg class="icon--m">
+						<use xlink:href="assets/svg/sprite.svg#avatar-dark" href="assets/svg/sprite.svg#avatar-dark"/>
+					</svg>
+				</figure>
+				<!-- col comment contenu -->
+				<div class="comment__content">
+					<div class="comment__content--detail">
+						<h3 class="comment__author">Jérôme</h3>
+						<small class="comment__date">08 juin 2021</small>
+					</div>
+					<div class="comment__content--action">
+						<figure class="navbar__icon">
+							{{ icons.get('reply', 'icon--m') }}
+							<figcaption class="icon-info">Répondre</figcaption>
+						</figure>
+					</div>
+					<p class="comment__content--body">
+						Quis autem vel eum iure reprehenderit, qui in ea voluptate velit esse, quam nihil molestiae consequatur,
+																																																																																																																																																																																																																																		                vel illum, qui dolorem eum fugiat, quo voluptas nulla pariatur?
+					</p>
+				</div>
+			</article>
+		</div>
+	</section>
+
+	<!-- SECTION RECOMMANDÉ POUR VOUS -->
+	<section class="recommanded-auctions">
+		<header class="header__title">
+			<h2>Recommandé pour vous</h2>
+			<div class="line"></div>
+		</header>
+		<div class="slider">
+			<div
+				class="slides">
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628088529/stampee/Estonian-postage-stamps.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628088529/stampee/Estonian-postage-stamps.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+
+				<!-- CARD -->
+				<article class="card">
+					<header class="card__header">
+						<h3>Estonian Stamps private collection</h3>
+						<svg class="icon">
+							<use xlink:href="assets/svg/sprite.svg#heart" href="assets/svg/sprite.svg#heart"/>
+						</svg>
+						<div class="chip">Lot #181</div>
+						<div class="chip large">Prix de lancement:
+							<b>100$</b>
+						</div>
+					</header>
+
+					<div class="card__image">
+						<figure>
+							<img src="https://res.cloudinary.com/dwhnxncff/image/upload/v1628100096/stampee/superman.jpg" alt="Estonian Stamps private collection"/>
+						</figure>
+					</div>
+
+					<div class="card__footer">
+						<div class="chip light status">L'enchère débute dans 2 jours 5h 30mn</div>
+						<div class="chip transparent views">22 vues</div>
+						<div class="chip transparent favorites">11 favoris</div>
+						<div class="chip transparent entrants">7 participants</div>
+						<svg class="icon--m card__menu">
+							<use xlink:href="assets/svg/sprite.svg#menu" href="assets/svg/sprite.svg#menu"/>
+						</svg>
+					</div>
+				</article>
+			</div>
+			<!-- SLIDES END -->
+			<!-- SLIDE CONTROLS -->
+			<svg class="icon--m slider--left">
+				<use xlink:href="assets/svg/sprite.svg#chevron-left" href="assets/svg/sprite.svg#chevron-left"/>
+			</svg>
+			<svg class="icon--m slider--right">
+				<use xlink:href="assets/svg/sprite.svg#chevron-right" href="assets/svg/sprite.svg#chevron-right"/>
+			</svg>
+			<!-- SLIDE CONTROLS END -->
+		</div>
+		<!-- SLIDER END -->
+	</section>
+{% endblock %}

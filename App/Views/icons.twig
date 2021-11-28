@@ -1,0 +1,9 @@
+{# a macro for embedding svg icons #}
+
+{% macro get(iconName, className) %}
+	{% include './Icons/' ~ iconName ~ '.svg.twig' with {
+        'iconName': iconName,
+        'className': className
+    } only 
+%}
+{% endmacro %}

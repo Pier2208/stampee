@@ -1,0 +1,28 @@
+.error {
+  position: absolute;
+  bottom: -$spacing-m;
+  background-color: $color-tertiary;
+  border-radius: 3px;
+  padding: 0 $spacing-s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  > small {
+    color: $white;
+    font-size: 11px;
+  }
+}
+
+.dashboard, .infobox {
+  .error {
+    background-color: transparent;
+    justify-content: flex-start;
+
+    > small {
+      color: $color-tertiary;
+      font-size: 12px;
+    }
+  }
+}

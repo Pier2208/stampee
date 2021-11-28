@@ -1,0 +1,40 @@
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: $spacing-m 0;
+    
+    grid-column: 1 / -1;
+    justify-self: start;
+  
+    > *:not(:first-child) {
+        margin-left: 1rem;
+    }
+  
+    &__icon {
+      font-family: $font-brand;
+      color: $color-text-darker;
+      font-size: 3.5rem;
+      border-radius: 50%;
+      background-color: $color-grey-light;
+      width: 4.5rem;
+      height: 4.55rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    &__name {
+      color: $color-text-light;
+      font-family: $font-brand;
+      font-size: 3.5rem;
+      font-weight: 300;
+    }
+  }
+  
+  @media (min-width: $bp-s) {
+    .logo {
+      grid-column: 1;
+    }
+  }
+  

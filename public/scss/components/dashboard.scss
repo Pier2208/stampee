@@ -1,0 +1,80 @@
+.dashboard__header {
+  .dashboard__nav {
+    max-width: $width-m;
+    margin-right: auto;
+    margin-left: auto;
+    background-color: $color-primary;
+    color: $white;
+    width: 100%;
+    font-family: $font-display;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: $spacing-m 0;
+    margin-top: $spacing-m;
+
+    svg {
+      fill: $white;
+    }
+  }
+
+  .header__title {
+    background-color: $color-grey-light;
+    color: $color-text-darker;
+    padding: $spacing-m;
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.dashboard {
+  max-width: $width-m;
+  min-height: 80vh;
+  margin-left: auto;
+  margin-right: auto;
+
+  > .grid__cards {
+    padding-top: 0;
+
+    .card {
+      border: 5px dashed $color-tertiary;
+
+      &.published {
+        border: 5px dashed green;
+      }
+    }
+    .favorite {
+      border: none;
+    }
+  }
+
+  &__message {
+    font-family: $font-display;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .form-group {
+    flex-direction: column;
+    align-items: flex-start;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+
+    > * {
+      margin-top: 0.5rem;
+    }
+  }
+
+  .submit-button--primary {
+    margin-top: 3rem;
+  }
+}
+
+.active {
+  figcaption {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,67 @@
+footer {
+    background-color: $color-primary;
+    color: $white;
+    height: fit-content;
+  
+    ul {
+      list-style: none;
+    }
+
+    svg {
+      fill: $white;
+    }
+  
+    > .container {
+      max-width: $width-m;
+  
+      display: grid;
+      grid-template-columns: repeat(2, minmax(max-content, 1fr));
+      gap: $spacing-m;
+      margin: 0 auto;
+      padding: 1.5rem 1rem 2rem;
+  
+      .links {
+        grid-column: 1;
+        justify-self: start;
+      }
+  
+      .infos {
+        grid-column: 2;
+        margin-top: 0;
+        justify-self: start;
+      }
+  
+      .newsletter {
+        grid-column: 1 / -1;
+        justify-self: start;
+  
+        .form-group {
+          flex-direction: row;
+        }
+      }
+  
+      .copyright {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+    }
+  }
+  
+  @media (min-width: $bp-s) {
+    footer {
+      .container {
+        grid-template-columns: repeat(3, 1fr);
+  
+        .links,
+        .infos,
+        .newsletter {
+          justify-self: center;
+        }
+  
+        .newsletter {
+          grid-column: 3;
+        }
+      }
+    }
+  }
+  
